@@ -1,85 +1,114 @@
-# Client Brief — Rifdaira Learning Center (RLC)
+# Laporan Brief Awal Klien — Rifdaira Learning Center (RLC)
 
-**Status:** Draft for client validation  
-**Prepared:** 10 November 2026  
-**Project:** Corporate website and healthcare training catalog
+**Status:** Draf untuk ditinjau dan dikonfirmasi oleh klien  
+**Tanggal penyusunan:** 10 November 2026  
+**Proyek:** Website profil lembaga dan katalog pelatihan kesehatan
 
-## 1. Initial understanding
+> Dokumen ini merangkum pemahaman awal Maximus terhadap kebutuhan RLC. Seluruh informasi yang belum dikonfirmasi ditandai sebagai asumsi atau pertanyaan. Dokumen ini belum menjadi spesifikasi final sebelum ditinjau dan disetujui oleh pihak RLC.
 
-Rifdaira Learning Center (RLC) is understood as a healthcare professional education and training provider based in Palembang. Its activities include clinical training, webinars, and workshops.
+## 1. Pemahaman Awal tentang RLC
 
-This brief records the current working understanding from initial research. It is not a final specification until RLC reviews and approves it.
+Berdasarkan informasi awal yang tersedia, Rifdaira Learning Center (RLC) dipahami sebagai lembaga penyelenggara pendidikan dan pelatihan bagi tenaga kesehatan yang berlokasi di Palembang.
 
-## 2. Website objectives
+Kegiatan RLC mencakup pelatihan klinis, webinar, dan workshop. Gambaran ini perlu dikonfirmasi kembali oleh pihak RLC agar penyajian profil dan layanan di website benar-benar akurat.
 
-1. Build a credible and professional digital presence for RLC.
-2. Explain RLC's identity, focus, and educational value.
-3. Present training programs, webinars, and workshops in a clear catalog.
-4. Make it easy for healthcare professionals to discover programs and enquire or register.
-5. Document past and upcoming learning activities as evidence of experience and continuity.
+## 2. Tujuan Website
 
-## 3. Proposed initial scope
+Website RLC diusulkan untuk mencapai beberapa tujuan berikut:
 
-### Corporate website
-- Home / overview
-- About RLC
-- Learning approach and areas of focus
-- Program and training catalog
-- Activity documentation / gallery
-- Contact and registration call-to-action
+1. Membangun kehadiran digital RLC yang profesional dan terpercaya.
+2. Menjelaskan identitas, fokus kegiatan, dan nilai pendidikan yang ditawarkan RLC.
+3. Menampilkan program pelatihan, webinar, dan workshop secara terstruktur.
+4. Memudahkan tenaga kesehatan menemukan program yang sesuai serta menghubungi atau mendaftar.
+5. Mendokumentasikan kegiatan yang telah dilaksanakan sebagai bukti pengalaman dan rekam jejak lembaga.
 
-### Training catalog
-Each program may include:
-- Program title and category
-- Short description and learning objectives
-- Intended participants
-- Format (onsite, webinar, workshop, clinical training)
-- Schedule and location / delivery method
-- Registration or enquiry instructions
-- Information about certificates and SKP, when applicable and verified by RLC
+## 3. Usulan Ruang Lingkup Website Tahap Pertama
 
-### Content management
-A manageable content area is proposed so the RLC team can update program information and activity documentation without editing website code. Exact CMS capabilities will be confirmed during briefing.
+### A. Halaman Profil Lembaga
+- Beranda dan ringkasan RLC.
+- Tentang RLC.
+- Visi, misi, pendekatan, atau fokus pendidikan (setelah dikonfirmasi).
+- Kontak dan informasi lokasi.
 
-## 4. Reference benchmark direction
+### B. Katalog Program Pelatihan
+Setiap program dapat menampilkan:
+- Nama dan kategori program.
+- Deskripsi singkat dan tujuan pembelajaran.
+- Sasaran peserta.
+- Bentuk kegiatan: pelatihan tatap muka, webinar, workshop, atau pelatihan klinis.
+- Jadwal serta lokasi atau metode pelaksanaan.
+- Petunjuk pendaftaran atau konsultasi.
+- Informasi sertifikat dan SKP apabila memang tersedia dan dapat diverifikasi.
 
-These references are research benchmarks, not templates to copy:
+### C. Dokumentasi Kegiatan
+- Foto kegiatan.
+- Ringkasan kegiatan yang telah berlangsung.
+- Informasi narasumber atau fasilitator jika disetujui untuk dipublikasikan.
+- Testimoni dan dokumentasi mitra jika tersedia serta mendapat izin publikasi.
 
-- **BMHS Diklat Indonesia** — visual credibility and professional training presentation.
-- **LPP IAKMI Miracle** — information structure for training and educational programs.
-- **PORMIKI Learning Center** — catalog, event, and registration presentation.
+### D. Pengelolaan Konten
+Diusulkan adanya area pengelolaan konten agar tim RLC dapat memperbarui informasi program dan dokumentasi tanpa harus mengubah kode website. Rincian hak akses dan kemampuan pengelolaan akan ditentukan setelah kebutuhan operasional dikonfirmasi.
 
-The final direction should reflect RLC's own identity, audience, and operational needs.
+## 4. Arah Referensi dan Studi Pembanding
 
-## 5. Important items to validate with RLC
+Referensi berikut digunakan sebagai bahan mempelajari cara penyajian informasi lembaga dan program pendidikan. Referensi ini bukan untuk disalin secara langsung.
 
-1. Official organization name, legal identity, address, and contact channels.
-2. Main audience: doctors, nurses, midwives, other health professionals, institutions, or a combination.
-3. Priority training categories and flagship programs.
-4. Whether RLC issues certificates, SKP, or other recognized credits; the exact issuing/recognition authority and wording.
-5. Registration flow: WhatsApp enquiry, external form, or an integrated registration process.
-6. Whether participants pay online and whether payment integration is needed now or later.
-7. Existing logo, brand colors, typography, photos, trainer profiles, and institutional documents.
-8. Past event photos, testimonials, partner institutions, and credentials that may be published.
-9. Who will manage program updates and how often.
-10. Preferred domain, hosting ownership, and administrative contacts.
+- **BMHS Diklat Indonesia:** bahan pembanding untuk penyajian informasi pelatihan kesehatan secara profesional.
+- **LPP IAKMI Miracle:** bahan pembanding untuk struktur informasi program pendidikan dan pelatihan.
+- **PORMIKI Learning Center:** bahan pembanding untuk penyajian katalog kegiatan, pembelajaran, dan pendaftaran.
 
-## 6. Recommended delivery sequence
+Arah desain akhir tetap harus mencerminkan identitas, karakter, dan kebutuhan RLC sendiri.
 
-**Initial release:** Corporate website + editable training catalog + contact/registration call-to-action.
+## 5. Informasi yang Perlu Dikonfirmasi kepada RLC
 
-**Potential later phase:** Participant accounts, integrated registration, payment, attendance, certificate generation, and training administration. These are not included in the initial scope unless RLC confirms otherwise.
+Agar perencanaan website tidak dibangun berdasarkan asumsi, Maximus memerlukan konfirmasi mengenai hal-hal berikut:
 
-## 7. Decisions requested from RLC
+1. Nama resmi lembaga, legalitas atau identitas kelembagaan, alamat, dan kanal kontak.
+2. Sasaran utama peserta: dokter, perawat, bidan, tenaga kesehatan lainnya, institusi, atau gabungan beberapa kelompok.
+3. Kategori pelatihan prioritas dan program unggulan yang ingin ditampilkan.
+4. Apakah RLC menerbitkan sertifikat atau menyediakan SKP? Jika ya, siapa pihak penerbit atau pengakuannya dan bagaimana ketentuan resminya?
+5. Bagaimana alur pendaftaran yang diinginkan: melalui WhatsApp, formulir eksternal, atau formulir pendaftaran di website?
+6. Apakah peserta melakukan pembayaran secara daring? Apakah integrasi pembayaran diperlukan sejak peluncuran?
+7. Apakah RLC telah memiliki logo, warna identitas, panduan merek, foto, profil pengajar, dan dokumen kelembagaan?
+8. Apakah tersedia foto kegiatan terdahulu, testimoni, daftar mitra, dan bukti kredibilitas yang boleh dipublikasikan?
+9. Siapa yang akan mengelola dan memperbarui informasi program di kemudian hari?
+10. Apakah RLC telah memiliki domain dan hosting? Siapa pemilik serta pengelola aksesnya?
 
-At the briefing meeting, request confirmation of:
-- Whether the objectives and audience above are accurate.
-- Which program categories must appear at launch.
-- Which registration method should be used.
-- Which certificates / SKP claims can be stated publicly and what evidence supports them.
-- Which brand and content assets RLC can provide.
-- Which features are essential for launch versus later development.
+## 6. Rekomendasi Tahapan Pengembangan
 
-## 8. Approval note
+### Tahap Awal — Website Profil dan Katalog
+Prioritas peluncuran yang disarankan:
+- Website profil lembaga.
+- Katalog program pelatihan yang dapat diperbarui.
+- Dokumentasi kegiatan.
+- Tombol kontak dan pendaftaran sesuai alur yang disepakati.
 
-This document is a discovery-stage brief. RLC's feedback will be recorded and incorporated before the project proceeds to detailed information architecture, content planning, and visual design.
+### Pengembangan Lanjutan — Sistem Pengelolaan Pelatihan
+Fitur berikut dapat dipertimbangkan pada tahap selanjutnya, sesuai kebutuhan dan anggaran:
+- Akun peserta.
+- Pendaftaran dan pengelolaan peserta.
+- Pembayaran terintegrasi.
+- Pengelolaan kehadiran.
+- Penerbitan sertifikat.
+- Administrasi program pelatihan.
+
+Fitur lanjutan tersebut belum termasuk ruang lingkup tahap awal, kecuali RLC menyatakan bahwa fitur tertentu wajib tersedia sejak peluncuran.
+
+## 7. Keputusan yang Diharapkan dari Pihak RLC
+
+Dalam sesi pembahasan brief, kami mengharapkan konfirmasi mengenai:
+
+1. Apakah gambaran lembaga, tujuan website, dan sasaran pengguna sudah sesuai?
+2. Kategori program apa saja yang wajib tersedia pada saat website diluncurkan?
+3. Metode pendaftaran apa yang paling sesuai dengan proses kerja RLC?
+4. Informasi sertifikat atau SKP apa yang boleh dicantumkan secara publik dan apa dasar keterangannya?
+5. Materi identitas dan dokumentasi apa saja yang dapat disediakan oleh RLC?
+6. Fitur apa yang wajib tersedia pada peluncuran pertama dan fitur apa yang dapat dikembangkan kemudian?
+
+## 8. Persetujuan dan Tahap Berikutnya
+
+Dokumen ini merupakan hasil tahap pemahaman awal (*discovery brief*), bukan spesifikasi teknis maupun desain final.
+
+Pihak RLC dipersilakan memberikan koreksi, tambahan informasi, dan keputusan atas poin-poin di atas. Masukan tersebut akan dicatat dan ditindaklanjuti sebelum Maximus menyusun struktur halaman, rencana konten, dan konsep desain website.
+
+**Persetujuan brief menjadi dasar untuk melanjutkan ke tahap perencanaan berikutnya.**
