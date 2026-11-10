@@ -13,7 +13,6 @@ export default function MaximusHome(){
  const [summary,setSummary]=useState("");
  const [body,setBody]=useState("");
  const [internal,setInternal]=useState("");
- const [savedNote,setSavedNote]=useState("");
  const [files,setFiles]=useState<File[]>([]);
  const [fileUrls,setFileUrls]=useState<string[]>([]);
  const [sent,setSent]=useState(false);
@@ -24,7 +23,6 @@ export default function MaximusHome(){
  useEffect(()=>{if(typeof window!=="undefined"){const d=localStorage.getItem("cpr-maximus-internal-note");if(d)setInternal(d)}},[]);
  useEffect(()=>()=>fileUrls.forEach(URL.revokeObjectURL),[fileUrls]);
  function addFiles(list:FileList|null){if(!list)return;const next=Array.from(list);setFiles(old=>[...old,...next]);setFileUrls(old=>[...old,...next.map(f=>URL.createObjectURL(f))])}
- function saveNote(){localStorage.setItem("cpr-maximus-internal-note",internal);setSavedNote("Catatan internal tersimpan.");}
  function saveDraft(){localStorage.setItem("cpr-maximus-draft",JSON.stringify({title,summary,body,internal,phase}));setDraftSaved(true);setMsg("Draft tersimpan.");}function send(){localStorage.setItem("cpr-maximus-draft",JSON.stringify({title,summary,body,internal,phase}));localStorage.setItem("cpr-maximus-internal-note",internal);setSent(true);setMsg("Laporan disimpan — Menunggu balasan klien.");window.scrollTo({top:0,behavior:"smooth"});}
  async function signOut(){await (await import("../lib/supabase")).supabase.auth.signOut()}
  if(!ready)return <div className="authpage">Memuat sesi…</div>;
