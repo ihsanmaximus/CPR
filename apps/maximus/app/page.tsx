@@ -1,0 +1,6 @@
+export default function MaximusHome() {
+  return <main className="shell">
+    <aside className="sidebar"><div className="brand">M <span>Maximus CPR</span></div><div className="project">CLIENT PROJECT REPORT<br/><small>Internal workspace</small></div><nav><a className="active">Phase 01 · Discovery and Brief</a><a>Phase 02 · Research & Analysis</a><a>Phase 03 · Strategy & Solution</a><a>Phase 04 · Design & Prototype</a><a>Phase 05 · Development</a><a>Phase 06 · Final Review & Launch</a></nav></aside>
+    <section className="main"><header><strong>Client Project Report</strong><span className="role">MAXIMUS · PROJECT MANAGER</span></header><div className="content"><div className="phase"><span>PHASE 01</span><div><h1>Discovery and Brief</h1><p>Susun hasil penelusuran digital dan rangkuman briefing untuk client.</p></div></div><div className="report"><div className="tag">MAXIMUS · REPORT EDITOR</div><h2>Hasil Briefing</h2><p>Editor report akan menampilkan dan menyimpan versi laporan di sini.</p><textarea placeholder="Tulis hasil penelusuran data digital, kebutuhan, tujuan, dan ruang lingkup proyek..." rows={12}/><button>Save Draft</button><button className="primary">Kirim Report ke Client</button></div></div></section>
+  </main>;
+}
