@@ -2,9 +2,12 @@
   "name": "@cpr/maximus",
   "version": "0.1.0",
   "private": true,
-  "scripts": { "dev": "next dev -p 3000", "build": "next build", "start": "next start -p 3000" },
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000"
+  },
   "dependencies": {
-    "@cpr/core": "0.1.0",
     "next": "16.4.2",
     "react": "19.2.0",
     "react-dom": "19.2.0"
