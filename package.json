@@ -3,10 +3,10 @@
   "private": true,
   "workspaces": ["apps/*", "packages/*"],
   "scripts": {
-    "dev:maximus": "npm --workspace @cpr/maximus dev",
-    "dev:client": "npm --workspace @cpr/client dev",
-    "build:maximus": "npm --workspace @cpr/maximus build",
-    "build:client": "npm --workspace @cpr/client build",
+    "dev:maximus": "npm run dev --workspace=@cpr/maximus",
+    "dev:client": "npm run dev --workspace=@cpr/client",
+    "build:maximus": "npm run build --workspace=@cpr/maximus",
+    "build:client": "npm run build --workspace=@cpr/client",
     "lint": "npm run lint --workspaces --if-present"
   },
   "engines": { "node": ">=20.9.0" }
