@@ -12,7 +12,8 @@
     "next": "16.4.2",
     "react": "19.2.0",
     "react-dom": "19.2.0",
-    "@supabase/supabase-js": "2.102.0"
+    "@supabase/supabase-js": "2.102.0",
+    "jodit-react": "^5.9.8"
   },
   "devDependencies": {
     "@types/node": "24.10.1",
