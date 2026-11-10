@@ -1,0 +1,2 @@
+-- No client/project seed data is inserted into a live environment.
+-- Create projects, phase definitions, and membership through the authenticated Maximus admin workflow.
