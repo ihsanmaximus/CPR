@@ -1,0 +1,13 @@
+{
+  "name": "maximus-cpr",
+  "private": true,
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "dev:maximus": "npm --workspace @cpr/maximus dev",
+    "dev:client": "npm --workspace @cpr/client dev",
+    "build:maximus": "npm --workspace @cpr/maximus build",
+    "build:client": "npm --workspace @cpr/client build",
+    "lint": "npm run lint --workspaces --if-present"
+  },
+  "engines": { "node": ">=20.9.0" }
+}
