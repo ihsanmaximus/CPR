@@ -11,3 +11,23 @@
 .upload-label{display:block;margin:12px 0;font-size:12px;font-weight:700;color:#42546a}.upload-label input{display:block;width:100%;margin-top:8px;padding:10px;border:1px dashed #aebdcd;border-radius:8px;background:#f8fafc;font:inherit;font-weight:400}
 .selected-files{padding-left:18px;font-size:11px;color:#536477}.selected-files button{margin-left:8px;border:0;background:none;color:#b42318;text-decoration:underline}
 @media(max-width:900px){.phase-card .phase h1{font-size:20px}.phase-card{padding:12px}.report-card,.revision-card{padding:16px}}
+
+/* Approved correction: client workspace identity and compact chronological side rail */
+:root{--navy:#718b78;--green:#187a4b}
+.sidebar{background:#718b78;color:#fff}
+.sidebar .project{border-color:#a8b9aa;background:#647e6b}
+.sidebar nav a{color:#f0f5f0}
+.sidebar nav a.active{background:#244c38;color:#fff}
+.sidebar .signout{border-color:#d0ddd1;color:#fff}
+.revision-field-label{display:block;font-weight:700;font-size:12px;color:#43546a;margin-top:14px}
+.revision-title-input{display:block;width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:9px;margin:8px 0 12px;font:inherit}
+.attachment-thumb{width:52px;height:48px;object-fit:cover;border-radius:7px;flex:0 0 52px}
+.rail .revision-history-item{display:flex;gap:10px;padding:12px 0;border-top:1px solid #edf1f5}
+.history-dot{width:9px;height:9px;flex:0 0 9px;border-radius:50%;background:#718b78;margin:5px 0 0}
+.revision-history-item>div,.upload-history-item>span:last-child{display:grid;gap:3px;min-width:0}
+.revision-history-item strong,.upload-history-item b{font-size:11px;overflow-wrap:anywhere}
+.revision-history-item small,.revision-history-item time,.upload-history-item small,.upload-history-item time{font-size:10px;color:var(--muted)}
+.upload-history-item{display:flex;align-items:center;gap:9px;padding:10px 0;border-top:1px solid #edf1f5}
+.upload-history-item img{width:54px;height:48px;object-fit:cover;border-radius:6px}
+.upload-history-item a{display:block;flex:0 0 auto}
+@media(max-width:900px){.sidebar{height:auto}.columns{padding:14px}.rail{display:grid;grid-template-columns:1fr;gap:0}}
