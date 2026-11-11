@@ -14,19 +14,39 @@ export default function ClientHome(){
  const [project,setProject]=useState<any>(null),[phases,setPhases]=useState<any[]>([]),[selected,setSelected]=useState<any>(null);
  const [reports,setReports]=useState<any[]>([]),[revisions,setRevisions]=useState<any[]>([]),[attachments,setAttachments]=useState<any[]>([]);
  const [revisionTitle,setRevisionTitle]=useState(""),[message,setMessage]=useState(""),[files,setFiles]=useState<File[]>([]),[notice,setNotice]=useState(""),[busy,setBusy]=useState(false);
+ const [checkingAccess,setCheckingAccess]=useState(true),[accessDenied,setAccessDenied]=useState(false);
  async function load(){
   if(!session)return;
-  const m=await supabase.from("cpr_project_members").select("project_id,role").eq("user_id",session.user.id).eq("role","client");
-  if(m.error){setNotice(m.error.message);return}
-  if(!m.data?.length){setNotice("Akun ini belum ditautkan ke proyek oleh Maximus. Kirim User ID akun kepada pengelola proyek.");return}
-  const p=await supabase.from("cpr_projects").select("*").eq("id",m.data[0].project_id).single();
-  if(p.error){setNotice(p.error.message);return}
+  setCheckingAccess(true);setAccessDenied(false);setNotice("");
+  // Admin accounts must never enter the Client deployment, even if an old
+  // or accidental client membership row also exists.
+  const [adminResult,m]=await Promise.all([
+   supabase.from("cpr_workspace_admins").select("user_id").eq("user_id",session.user.id).maybeSingle(),
+   supabase.from("cpr_project_members").select("project_id,role").eq("user_id",session.user.id)
+  ]);
+  if(adminResult.error||m.error){
+   setNotice(adminResult.error?.message||m.error?.message||"Gagal memeriksa hak akses.");
+   setCheckingAccess(false);return;
+  }
+  if(adminResult.data||(m.data||[]).some((member:any)=>member.role==="maximus")){
+   setAccessDenied(true);
+   setNotice("Akun Admin Maximus tidak diizinkan masuk melalui aplikasi Client. Silakan gunakan link Admin Maximus.");
+   setCheckingAccess(false);return;
+  }
+  const clientMembership=(m.data||[]).find((member:any)=>member.role==="client");
+  if(!clientMembership){
+   setNotice("Akun ini belum ditautkan ke proyek sebagai klien oleh Maximus. Kirim User ID akun kepada pengelola proyek.");
+   setCheckingAccess(false);return;
+  }
+  const p=await supabase.from("cpr_projects").select("*").eq("id",clientMembership.project_id).single();
+  if(p.error){setNotice(p.error.message);setCheckingAccess(false);return}
   setProject(p.data);
   const ph=await supabase.from("cpr_phases").select("*").eq("project_id",p.data.id).neq("status","locked").order("phase_number");
-  if(ph.error){setNotice(ph.error.message);return}
+  if(ph.error){setNotice(ph.error.message);setCheckingAccess(false);return}
   setPhases(ph.data||[]);
   const active=(ph.data||[]).find(x=>x.status!=="approved")||(ph.data||[]).at(-1);
   if(active)await openPhase(active,p.data.id);
+  setCheckingAccess(false);
  }
  async function openPhase(phase:any,projectId=project?.id){
   setSelected(phase);setReports([]);setRevisions([]);setAttachments([]);
@@ -79,7 +99,9 @@ export default function ClientHome(){
  async function signOut(){await supabase.auth.signOut()}
  if(!ready)return <div className="authpage">Memuat sesi…</div>;
  if(!session)return <div className="authpage"><AuthPanel/></div>;
- if(!project)return <div className="authpage"><div className="authbox"><h2>Ruang Klien CPR</h2><p>{notice||"Memeriksa akses proyek…"}</p><p><b>User ID:</b><br/><code>{session.user.id}</code></p><button onClick={load}>Periksa kembali</button><button className="secondary" onClick={signOut}>Keluar</button></div></div>;
+ if(checkingAccess)return <div className="authpage">Memeriksa hak akses Klien…</div>;
+ if(accessDenied)return <div className="authpage"><div className="authbox"><h2>Akses Client Ditolak</h2><p>{notice}</p><p>Akun Anda terdaftar sebagai Admin Maximus dan tidak dapat menggunakan aplikasi Client.</p><button onClick={signOut}>Keluar</button></div></div>;
+ if(!project)return <div className="authpage"><div className="authbox"><h2>Ruang Klien CPR</h2><p>{notice||"Akun ini belum ditautkan ke proyek sebagai klien."}</p><p><b>User ID:</b><br/><code>{session.user.id}</code></p><button onClick={load}>Periksa kembali</button><button className="secondary" onClick={signOut}>Keluar</button></div></div>;
  const count=revisions.length,latest=reports[reports.length-1],canRev=selected?selected.status==="waiting_client"&&count<2:false,canApprove=selected?selected.status==="waiting_client":false;
  const reportAttachments=(reportId:string)=>attachments.filter(f=>f.report_id===reportId);
  const revisionAttachments=(revisionId:string)=>attachments.filter(f=>f.revision_request_id===revisionId);
