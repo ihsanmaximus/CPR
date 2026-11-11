@@ -3,6 +3,18 @@ import { supabase } from "./supabase";
 export const CPR_PROJECT_CODE = "RLC";
 
 export async function loadMaximusWorkspace(userId: string) {
+  // The Admin deployment requires BOTH explicit workspace provisioning
+  // and a Maximus membership in the selected project.
+  const { data: workspaceAdmin, error: adminError } = await supabase
+    .from("cpr_workspace_admins")
+    .select("user_id")
+    .eq("user_id", userId)
+    .maybeSingle();
+  if (adminError) throw adminError;
+  if (!workspaceAdmin) {
+    throw new Error("CPR_ACCESS_DENIED: Akun ini tidak memiliki izin Admin Maximus. Gunakan aplikasi Client jika Anda adalah klien.");
+  }
+
   const { data: project, error: projectError } = await supabase
     .from("cpr_projects")
     .select("*")
@@ -18,7 +30,7 @@ export async function loadMaximusWorkspace(userId: string) {
     .maybeSingle();
   if (memberError) throw memberError;
   if (membership?.role !== "maximus") {
-    throw new Error("Akun ini belum memiliki akses Workspace Maximus untuk proyek RLC.");
+    throw new Error("CPR_ACCESS_DENIED: Akun ini tidak memiliki role Maximus pada proyek RLC.");
   }
 
   const { data: phases, error: phaseError } = await supabase
