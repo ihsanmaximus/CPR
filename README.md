@@ -4,7 +4,7 @@ Client Project Report — aplikasi modular untuk pelaporan proyek klien berbasis
 
 ## Current version
 
-**v1.1.0** — pemisahan deployment Admin dan Client.
+**v1.1.2** — pemisahan role Admin/Client, pengamanan RLS, dan penonaktifan pendaftaran mandiri.
 
 Versi kanonis proyek disimpan pada file `VERSION`. Setiap milestone yang sudah diuji dan disepakati dicatat di bagian **Version history** di bawah ini.
 
@@ -37,7 +37,7 @@ Kedua deployment menggunakan backend Supabase CPR yang sama. Pastikan Base Direc
 - Deployment Admin berhasil dibuka dan diuji menggunakan akun admin.
 - Deployment Client tetap dipisahkan dari deployment Admin.
 
-**Catatan validasi:** milestone ini mencatat pemisahan jalur deployment. Pengujian penolakan silang role (akun Client ditolak di Admin dan akun Admin ditolak di Client), termasuk verifikasi server-side dan RLS, masih menjadi pekerjaan berikutnya. Jangan menganggap isolasi role sudah lulus hanya karena kedua URL berbeda.
+**Validasi:** pemisahan role Admin dan Client telah diuji pada browser mobile; akun Admin ditolak di aplikasi Client dan akun Client ditolak di aplikasi Admin. Pemeriksaan role server-side dan simulasi kebijakan RLS juga lulus.
 
 ## Agreed milestone roadmap
 
@@ -45,7 +45,7 @@ Milestone berikut sudah disepakati sebagai urutan pekerjaan. Statusnya **direnca
 
 | Target versi | Milestone | Kriteria selesai |
 |---|---|---|
-| **v1.1.2** | Perbaikan pemisahan role Admin dan Client | **Dalam pengerjaan — kode guard dan kebijakan RLS sudah diperbaiki serta deployment Netlify berhasil; validasi login manual Chrome/Firefox masih menunggu.** Kriteria akhir: Admin diterima di aplikasi Admin dan ditolak di Client; Client diterima di Client dan ditolak di Admin. |
+| **v1.1.2** | Pemisahan role Admin dan Client + penghapusan pendaftaran mandiri | **SELESAI.** Admin diterima di aplikasi Admin dan ditolak di Client; Client diterima di Client dan ditolak di Admin. Pemeriksaan server-side dan RLS aktif. Tombol dan alur Daftar akun dihapus dari kedua aplikasi agar pembuatan akun dilakukan secara terkontrol oleh pengelola. Kedua deployment Netlify berhasil. |
 | **v1.1.3** | Perbaikan struktur layout dan tampilan | Struktur halaman, urutan panel, tata letak responsif, dan tampilan Workspace Maximus/Client diperbaiki serta diuji pada perangkat mobile dan desktop tanpa merusak fungsi yang sudah berjalan. |
 
 **Catatan urutan:** v1.1.1 belum ditetapkan dalam roadmap ini. Jangan menganggapnya sudah dirilis atau mengubah nomor versi aktif hanya untuk mengisi urutan.
@@ -60,13 +60,16 @@ Milestone berikut sudah disepakati sebagai urutan pekerjaan. Statusnya **direnca
 - Jika build atau pengujian gagal, milestone tetap berstatus direncanakan/dalam pengerjaan dan tidak ditetapkan sebagai rilis.
 - File `VERSION` hanya menunjukkan versi aktif yang sudah dirilis dan tervalidasi.
 
-### v1.1.2 implementation notes (not yet released)
+### v1.1.2 release notes — 2026-11-11
 
 - Admin deployment: Netlify build `6af3f34838e416ec3269db91` — READY.
 - Client deployment: Netlify build `6af3f3481ae8947bd2b7931f` — READY.
 - Supabase role matrix checked under the `authenticated` database role: Ihsan and Abu pass the Admin predicate and do not have Client membership; Diris fails the Admin predicate and has Client membership.
 - RLS update-policy simulation: Ihsan and Abu are authorized for the six project phases; Diris is authorized for zero phase updates. Test updates were rolled back.
-- Manual sign-in across Chrome and Firefox is still required before v1.1.2 can be marked released and written to `VERSION`.
+- Uji browser yang dikirim pengguna memperlihatkan akun Admin ditolak di aplikasi Client dan akun Client ditolak di aplikasi Admin.
+- Tombol Daftar akun serta pemanggilan `supabase.auth.signUp` dihapus dari kedua aplikasi. Pembuatan akun sekarang harus melalui proses admin yang terkontrol.
+- Deployment terbaru Client dengan penghapusan daftar: `6af3fef4fb9dbde85e9839ec` — READY.
+- Deployment Admin dengan penghapusan daftar: `6af3fef0b620470d820e72c7` — READY.
 
 ## Repository structure
 
