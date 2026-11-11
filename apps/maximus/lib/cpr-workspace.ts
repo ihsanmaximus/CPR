@@ -47,9 +47,7 @@ export async function loadMaximusPhase(phaseId: string) {
   const reports = reportsResult.data || [];
   const revisions = revisionsResult.data || [];
   const latestReport = reports[reports.length - 1] || null;
-  const attachmentsResult = latestReport
-    ? await supabase.from("cpr_attachments").select("*").eq("report_id", latestReport.id).order("created_at")
-    : { data: [], error: null };
+  const attachmentsResult = await supabase.from("cpr_attachments").select("*").eq("phase_id", phaseId).order("created_at");
   if (attachmentsResult.error) throw attachmentsResult.error;
 
   const attachments = await Promise.all((attachmentsResult.data || []).map(async (attachment: any) => {
@@ -65,9 +63,9 @@ export async function loadMaximusPhase(phaseId: string) {
 
   const timeline = [
     { id: "report-1", title: "Report (Versi Awal)", actor: "Maximus", createdAt: report1?.created_at, summary: report1?.stressing_point || "", status: report1 ? "completed" : "upcoming", marker: report1 ? "✓" : "1", placeholder: "Menunggu laporan awal dari Maximus..." },
-    { id: "revision-1", title: "Revisi 1 – Masukan Client", actor: "Client", createdAt: revision1?.created_at, summary: revision1?.message || "", status: revision1 ? "completed" : report1 ? "pending" : "upcoming", marker: "1", placeholder: "Menunggu masukan dari client..." },
+    { id: "revision-1", title: "Revisi 1 – Masukan Client", actor: "Client", createdAt: revision1?.created_at, summary: revision1?.title || revision1?.message || "", status: revision1 ? "completed" : report1 ? "pending" : "upcoming", marker: "1", placeholder: "Menunggu masukan dari client..." },
     { id: "report-2", title: "Hasil Revisi 1", actor: "Maximus", createdAt: report2?.created_at, summary: report2?.stressing_point || "", status: report2 ? "completed" : "upcoming", marker: report2 ? "✓" : "2", placeholder: "Menunggu input dari Maximus..." },
-    { id: "revision-2", title: "Revisi 2 – Masukan Client", actor: "Client", createdAt: revision2?.created_at, summary: revision2?.message || "", status: revision2 ? "completed" : "upcoming", marker: "3", placeholder: "—" },
+    { id: "revision-2", title: "Revisi 2 – Masukan Client", actor: "Client", createdAt: revision2?.created_at, summary: revision2?.title || revision2?.message || "", status: revision2 ? "completed" : "upcoming", marker: "3", placeholder: "—" },
     { id: "report-3", title: "Hasil Revisi 2 (Final)", actor: "Maximus", createdAt: report3?.created_at, summary: report3?.stressing_point || "", status: report3 ? "completed" : "upcoming", marker: report3 ? "✓" : "4", placeholder: "—" },
   ];
 
@@ -79,6 +77,7 @@ export async function loadMaximusPhase(phaseId: string) {
     internalNote: notesResult.data?.[0]?.body || "",
     attachments,
     clientReplied: revisions.length > 0 || (approvalsResult.data || []).length > 0,
+    needsRevisionReport: revisions.length > reports.length - 1 && reports.length < 3,
   };
 }
 
@@ -87,6 +86,7 @@ type SaveMaximusReportArgs = {
   phaseId: string;
   userId: string;
   reportId: string | null;
+  versionNumber: number;
   title: string;
   stressingPoint: string;
   body: string;
@@ -101,13 +101,14 @@ export async function saveMaximusReport(args: SaveMaximusReportArgs) {
     body: args.body,
   };
 
+  const kind = args.versionNumber === 1 ? "initial" : args.versionNumber === 2 ? "revision_1_result" : "revision_2_result";
   const reportResult = args.reportId
     ? await supabase.from("cpr_reports").update(reportPayload).eq("id", args.reportId).select("*").single()
     : await supabase.from("cpr_reports").insert({
         ...reportPayload,
         phase_id: args.phaseId,
-        version_number: 1,
-        kind: "initial",
+        version_number: args.versionNumber,
+        kind,
         created_by: args.userId,
       }).select("*").single();
 
