@@ -39,14 +39,26 @@ Kedua deployment menggunakan backend Supabase CPR yang sama. Pastikan Base Direc
 
 **Catatan validasi:** milestone ini mencatat pemisahan jalur deployment. Pengujian penolakan silang role (akun Client ditolak di Admin dan akun Admin ditolak di Client), termasuk verifikasi server-side dan RLS, masih menjadi pekerjaan berikutnya. Jangan menganggap isolasi role sudah lulus hanya karena kedua URL berbeda.
 
-### Aturan pencatatan versi berikutnya
+## Agreed milestone roadmap
+
+Milestone berikut sudah disepakati sebagai urutan pekerjaan. Statusnya **direncanakan**, bukan rilis yang sudah selesai. Nomor versi baru akan dipatenkan sebagai versi aktif setelah implementasi, deployment, dan pengujian berhasil.
+
+| Target versi | Milestone | Kriteria selesai |
+|---|---|---|
+| **v1.1.2** | Perbaikan pemisahan role Admin dan Client | Akun Admin dapat masuk ke aplikasi Admin dan ditolak di aplikasi Client; akun Client dapat masuk ke aplikasi Client dan ditolak di aplikasi Admin. Pemeriksaan dilakukan pada sisi server dan didukung kebijakan Supabase RLS. |
+| **v1.1.3** | Perbaikan struktur layout dan tampilan | Struktur halaman, urutan panel, tata letak responsif, dan tampilan Workspace Maximus/Client diperbaiki serta diuji pada perangkat mobile dan desktop tanpa merusak fungsi yang sudah berjalan. |
+
+**Catatan urutan:** v1.1.1 belum ditetapkan dalam roadmap ini. Jangan menganggapnya sudah dirilis atau mengubah nomor versi aktif hanya untuk mengisi urutan.
+
+## Aturan pencatatan versi
 
 - Naikkan versi hanya setelah perubahan selesai, deployment berhasil, dan skenario pengujian terkait lulus.
 - Catat setiap versi sebagai entri baru di atas versi sebelumnya; jangan menghapus riwayat versi lama.
-- Gunakan patch version untuk perbaikan kecil yang sudah tervalidasi (contoh: `1.1.1`).
+- Gunakan patch version untuk perbaikan yang sudah tervalidasi (contoh: `1.1.1`, `1.1.2`).
 - Gunakan minor version untuk milestone fitur atau perubahan kemampuan yang lebih besar (contoh: `1.2.0`).
 - Setiap entri mencantumkan tanggal, ringkasan perubahan, deployment yang diuji, dan hasil validasi.
-- Jika build atau pengujian gagal, jangan tetapkan versi tersebut sebagai milestone rilis.
+- Jika build atau pengujian gagal, milestone tetap berstatus direncanakan/dalam pengerjaan dan tidak ditetapkan sebagai rilis.
+- File `VERSION` hanya menunjukkan versi aktif yang sudah dirilis dan tervalidasi.
 
 ## Repository structure
 
