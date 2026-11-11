@@ -23,22 +23,13 @@ export function AuthPanel() {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
 
-  async function submit(signup: boolean) {
+  async function submit() {
     setBusy(true);
     setMessage("");
     try {
-      const redirectTo = window.location.origin;
-      const result = signup
-        ? await supabase.auth.signUp({
-            email: email.trim(),
-            password,
-            options: { emailRedirectTo: redirectTo },
-          })
-        : await supabase.auth.signInWithPassword({ email: email.trim(), password });
+      const result = await supabase.auth.signInWithPassword({ email: email.trim(), password });
       if (result.error) {
         setMessage(result.error.message);
-      } else if (signup) {
-        setMessage("Pendaftaran diterima. Buka email konfirmasi; tautan akan kembali ke CPR.");
       } else {
         setMessage("Berhasil masuk.");
       }
@@ -56,8 +47,7 @@ export function AuthPanel() {
       <input aria-label="Email" placeholder="Email" type="email" value={email} onChange={e => setEmail(e.target.value)} />
       <input aria-label="Password" placeholder="Password" type="password" value={password} onChange={e => setPassword(e.target.value)} />
       <div className="authactions">
-        <button disabled={busy || !email.trim() || password.length < 6} onClick={() => submit(false)}>Masuk</button>
-        <button className="secondary" disabled={busy || !email.trim() || password.length < 6} onClick={() => submit(true)}>Daftar akun</button>
+        <button disabled={busy || !email.trim() || password.length < 6} onClick={submit}>Masuk</button>
       </div>
       {message && <small role="status">{message}</small>}
     </div>
