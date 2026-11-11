@@ -30,6 +30,7 @@ export default function MaximusHome(){
  const [savedAt,setSavedAt]=useState<Date|null>(null);
  const [draftSaved,setDraftSaved]=useState(false);
  const [msg,setMsg]=useState("");
+ const [accessState,setAccessState]=useState<"checking"|"allowed"|"denied"|"error">("checking");
  const joditConfig=useMemo(()=>({readonly:false,placeholder:"Tulis laporan lengkap...",height:420,minHeight:300,toolbarAdaptive:true,toolbarSticky:false,showCharsCounter:false,showWordsCounter:false,showXPathInStatusbar:false}),[]);
  function applyPhaseBundle(index:number,bundle:any){
   const report=bundle.latestReport;
@@ -44,6 +45,8 @@ export default function MaximusHome(){
  useEffect(()=>{
   if(!ready||!session)return;
   let active=true;
+  setAccessState("checking");
+  setProject(null);setPhaseRows([]);
   (async()=>{
    try{
     const workspace=await loadMaximusWorkspace(session.user.id);
@@ -52,7 +55,14 @@ export default function MaximusHome(){
     const activeIndex=workspace.phases.findIndex((row:any)=>row.status!=="locked"&&row.status!=="approved");
     const index=activeIndex>=0?activeIndex:0;
     if(workspace.phases[index]){const bundle=await loadMaximusPhase(workspace.phases[index].id);if(active)applyPhaseBundle(index,bundle);}
-   }catch(error){if(active)setMsg(error instanceof Error?error.message:"Gagal menghubungkan Workspace Maximus ke Supabase.");}
+    if(active)setAccessState("allowed");
+   }catch(error){
+    if(active){
+     const message=error instanceof Error?error.message:"Gagal menghubungkan Workspace Maximus ke Supabase.";
+     setMsg(message);
+     setAccessState(message.startsWith("CPR_ACCESS_DENIED:")?"denied":"error");
+    }
+   }
   })();
   return()=>{active=false};
  },[ready,session?.user.id]);
@@ -79,6 +89,9 @@ export default function MaximusHome(){
  async function signOut(){await (await import("../lib/supabase")).supabase.auth.signOut()}
  if(!ready)return <div className="authpage">Memuat sesi…</div>;
  if(!session)return <div className="authpage"><AuthPanel/></div>;
+ if(accessState==="checking")return <div className="authpage">Memeriksa hak akses Admin…</div>;
+ if(accessState==="denied")return <div className="authpage"><div className="authbox"><h2>Akses Admin Ditolak</h2><p>{msg.replace("CPR_ACCESS_DENIED: ","")}</p><p>Akun Anda tidak diizinkan membuka Workspace Maximus.</p><button onClick={signOut}>Keluar</button></div></div>;
+ if(accessState==="error")return <div className="authpage"><div className="authbox"><h2>Workspace belum dapat dimuat</h2><p>{msg}</p><button onClick={()=>window.location.reload()}>Coba lagi</button><button className="secondary" onClick={signOut}>Keluar</button></div></div>;
  return <main className="shell"><aside className="sidebar"><div className="brand">M <span>MAXIMUS CPR</span></div><div className="project">WORKSPACE INTERNAL<br/><small>Workspace Maximus</small></div><nav>{phases.map((p,i)=><a key={p} className={i===phase?"active":""} onClick={()=>openPhase(i)}>{String(i+1).padStart(2,"0")} · {p}</a>)}</nav><button className="signout" onClick={signOut}>Keluar</button></aside>
  <section className="main"><header><strong>Client Project Report</strong><span className="role">MAXIMUS · {session.user.email}</span></header>
  {sent&&!needsRevisionReport?<div className="client-preview"><div className="client-top"><span>Proyek / Workspace Maximus</span><span>Workspace Maximus</span></div><div className="client-content"><div className="client-heading"><div><small>LAPORAN PROYEK · TAHAP {String(phase+1).padStart(2,"0")}</small><h1>Ringkasan pemahaman kebutuhan awal website klien</h1></div><span className="waiting">Menunggu persetujuan klien</span></div>{(phaseReports.length>1||phaseRevisions.length>0)&&<section className="report-cycle-stack"><h2>Riwayat Dokumen dan Tanggapan</h2>{[...phaseReports.slice(0,-1).map((item:any)=>({type:"report",item})),...phaseRevisions.map((item:any)=>({type:"revision",item}))].sort((a:any,b:any)=>new Date(a.item.created_at).getTime()-new Date(b.item.created_at).getTime()).map((entry:any)=><article className={"report cycle-document "+(entry.type==="revision"?"cycle-client-revision":"")} key={entry.item.id}><span className="tag">{entry.type==="report"?"LAPORAN MAXIMUS · VERSI "+entry.item.version_number:"TANGGAPAN KLIEN · REVISI "+entry.item.revision_number}</span><h2>{entry.type==="report"?entry.item.title:(entry.item.title||("Revisi "+entry.item.revision_number))}</h2><small>{new Date(entry.item.created_at).toLocaleString("id-ID")}</small>{entry.type==="report"?<><div className="summary-quote">{entry.item.stressing_point}</div><h3>Laporan Lengkap</h3><div className="rendered-report" dangerouslySetInnerHTML={{__html:entry.item.body}}/></>:<div className="revision-detail">{entry.item.message}</div>}</article>)}</section>}<div className="client-grid"><div className="client-left"><article className="report client-report"><div className="client-phase-heading"><div className="client-phase-number">{String(phase+1).padStart(2,"0")}</div><div className="client-phase-copy"><h2>{phases[phase]}</h2><p>Pemahaman awal, tujuan, dan ruang lingkup proyek</p></div></div><div className="client-report-meta"><span className="report-origin">LAPORAN DARI MAXIMUS</span>{!clientReplied&&<button type="button" className="icon-edit-small" onClick={()=>setSent(false)} aria-label="Edit laporan" title="Edit laporan">✎ Edit</button>}</div><div className="client-report-date">{(savedAt||new Date()).toLocaleString("id-ID",{day:"numeric",month:"long",year:"numeric",hour:"2-digit",minute:"2-digit"})}</div><h2 className="client-report-title">{title}</h2><div className="summary-quote">{summary}</div><h3 className="full-report-heading">Laporan Lengkap</h3><div className="rendered-report plain-report-text" dangerouslySetInnerHTML={{__html:body}}/></article></div><aside><article className="report revision-timeline-card"><h3>Status &amp; Riwayat Phase {String(phase+1).padStart(2,"0")}</h3><div className="revision-timeline">{timeline.map((entry:any)=><div className={"timeline-step "+entry.status} key={entry.id}><span className="timeline-marker">{entry.marker}</span><div className="timeline-content"><div className="timeline-title-row"><strong>{entry.title}</strong><span className={"timeline-actor "+(entry.actor==="Client"?"client":"maximus")}>{entry.actor}</span></div>{entry.createdAt?<time>{new Date(entry.createdAt).toLocaleString("id-ID",{day:"numeric",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"})}</time>:<p className="timeline-placeholder">{entry.placeholder}</p>}{entry.summary&&<div className="timeline-summary">{entry.summary}</div>}</div></div>)}</div></article><article className="report"><h3>Dokumen & Lampiran</h3>{savedAttachments.map((f:any)=><div className="client-file" key={f.id}>{f.mime_type?.startsWith("image/")?<img className="client-thumb" src={f.signedUrl} alt={f.file_name}/>:<span className="thumb">{f.mime_type==="application/pdf"?"PDF":"FILE"}</span>}<span><b>{f.file_name}</b><small>{(Number(f.file_size)/1024).toFixed(0)} KB · Lampiran dari Maximus</small></span></div>)}{!savedAttachments.length&&<p className="hint">Belum ada lampiran.</p>}</article></aside></div></div></div>
