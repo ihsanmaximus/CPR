@@ -45,7 +45,7 @@ Milestone berikut sudah disepakati sebagai urutan pekerjaan. Statusnya **direnca
 
 | Target versi | Milestone | Kriteria selesai |
 |---|---|---|
-| **v1.1.2** | Perbaikan pemisahan role Admin dan Client | Akun Admin dapat masuk ke aplikasi Admin dan ditolak di aplikasi Client; akun Client dapat masuk ke aplikasi Client dan ditolak di aplikasi Admin. Pemeriksaan dilakukan pada sisi server dan didukung kebijakan Supabase RLS. |
+| **v1.1.2** | Perbaikan pemisahan role Admin dan Client | **Dalam pengerjaan — kode guard dan kebijakan RLS sudah diperbaiki serta deployment Netlify berhasil; validasi login manual Chrome/Firefox masih menunggu.** Kriteria akhir: Admin diterima di aplikasi Admin dan ditolak di Client; Client diterima di Client dan ditolak di Admin. |
 | **v1.1.3** | Perbaikan struktur layout dan tampilan | Struktur halaman, urutan panel, tata letak responsif, dan tampilan Workspace Maximus/Client diperbaiki serta diuji pada perangkat mobile dan desktop tanpa merusak fungsi yang sudah berjalan. |
 
 **Catatan urutan:** v1.1.1 belum ditetapkan dalam roadmap ini. Jangan menganggapnya sudah dirilis atau mengubah nomor versi aktif hanya untuk mengisi urutan.
@@ -59,6 +59,14 @@ Milestone berikut sudah disepakati sebagai urutan pekerjaan. Statusnya **direnca
 - Setiap entri mencantumkan tanggal, ringkasan perubahan, deployment yang diuji, dan hasil validasi.
 - Jika build atau pengujian gagal, milestone tetap berstatus direncanakan/dalam pengerjaan dan tidak ditetapkan sebagai rilis.
 - File `VERSION` hanya menunjukkan versi aktif yang sudah dirilis dan tervalidasi.
+
+### v1.1.2 implementation notes (not yet released)
+
+- Admin deployment: Netlify build `6af3f34838e416ec3269db91` — READY.
+- Client deployment: Netlify build `6af3f3481ae8947bd2b7931f` — READY.
+- Supabase role matrix checked under the `authenticated` database role: Ihsan and Abu pass the Admin predicate and do not have Client membership; Diris fails the Admin predicate and has Client membership.
+- RLS update-policy simulation: Ihsan and Abu are authorized for the six project phases; Diris is authorized for zero phase updates. Test updates were rolled back.
+- Manual sign-in across Chrome and Firefox is still required before v1.1.2 can be marked released and written to `VERSION`.
 
 ## Repository structure
 
