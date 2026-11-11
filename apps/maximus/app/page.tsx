@@ -21,7 +21,10 @@ export default function MaximusHome(){
  const [project,setProject]=useState<any>(null);
  const [phaseRows,setPhaseRows]=useState<any[]>([]);
  const [reportId,setReportId]=useState<string|null>(null);
- const [savedAttachments,setSavedAttachments]=useState<any[]>([]);\n const [phaseReports,setPhaseReports]=useState<any[]>([]);\n const [phaseRevisions,setPhaseRevisions]=useState<any[]>([]);\n const [needsRevisionReport,setNeedsRevisionReport]=useState(false);
+ const [savedAttachments,setSavedAttachments]=useState<any[]>([]);
+ const [phaseReports,setPhaseReports]=useState<any[]>([]);
+ const [phaseRevisions,setPhaseRevisions]=useState<any[]>([]);
+ const [needsRevisionReport,setNeedsRevisionReport]=useState(false);
  const [timeline,setTimeline]=useState<any[]>([]);
  const [busy,setBusy]=useState(false);
  const [savedAt,setSavedAt]=useState<Date|null>(null);
